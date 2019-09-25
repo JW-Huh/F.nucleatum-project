@@ -61,8 +61,7 @@ bugs <- read.csv("input/bugs_1526.csv", header = T, row.names = 1) # 533 microbe
 meta <- read.csv("input/meta_1526.csv", header = T, row.names = 1) # Metadata for 1526 samples
 mark <- read.csv("input/lefse.marker.csv", header = T, row.names = 1) # LEfSE results; contains 14 non-IBD + 12 IBD marker species 
   ibd.mark <- rownames(mark)[mark$Class=="IBD"] ; non.mark <- rownames(mark)[mark$Class=="nonIBD"] ; mark.list <- c(ibd.mark, non.mark)
-  bc <- read.csv("input/merge.microbe_simple.csv", header = T) ; rownames(bc) <- bc$microbe ; bc$microbe <- NULL
-  
+
 ph <- t(read.csv("input/phylum.csv", header = T, row.names = 1)) ; ph <- as.data.frame(ph[order(rownames(ph)),]) # Phylum level composition
 core_CRC <- read.csv("input/core.species.CRC.csv", header=T) ; core_CRC <- as.character(core_CRC$core.CRC)  # Core signature of CRC
   
@@ -3245,6 +3244,7 @@ tiff("figures/Sup_00_replicated_Microbes.tiff", width = 1000, height = 600, res 
   # B. dentium and B. catenulatum were even enrich in IBD condition. 
 
 # But, this result was not included in manuscript. 
+
 
 # Index
   # 0 = No, I did not consume thse products in the last 7 days
