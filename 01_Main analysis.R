@@ -2045,8 +2045,8 @@ tiff("figures/nonIBD_marker_diff_enrichment_Pvalue.tiff", res = 200, width = 800
         legend.key = element_rect(fill = "white", color="white")) + guides(size=F, alpha=F); dev.off()
 
 
-bugs.auc.stat[bugs.auc.stat$IBD_marker=="IBD",c("microbe", "meanAUC")]
-bugs.auc.stat[bugs.auc.stat$nonIBD_marker=="nonIBD",c("microbe", "meanAUC")]
+# P-value for significant enrichment at AUC>0.5 & p-value <0.05 (differential enrichment in F. nucleautm-prior or posterior samples)
+head(bugs.auc.stat)
 
 
 
@@ -2574,6 +2574,7 @@ tiff("figures/Post_prob_Marker_Shannon_scatter.tiff", res=250, width = 1000, hei
 
 # PCoA using posterior probability
 # Matching pcoa dataframe with probability data
+pcoa.meta.log <- pcoa.meta.log[order(pcoa.meta.log$External.ID, decreasing = T),] ; Prob_all <- Prob_all[order(Prob_all$External.ID, decreasing = T),]
 identical(pcoa.meta.log$External.ID, Prob_all$External.ID) # TRUE
 
 # Merging two dataframes
@@ -2714,7 +2715,63 @@ tiff("figures/Post_prob_change_in_dynamic_top12.tiff", res=250, width = 900, hei
         axis.line = element_line(size=0.4),
         axis.title.y = element_blank()) ; dev.off()
 
+# Dynamic subjecst and microbial change in PCoA plot
+# 1) dynamic top-12
+head(pcoa.meta.log)
+pcoa.d12 <- pcoa.meta.log[pcoa.meta.log$Participant.ID %in% dy_t12,] 
+pcoa.d12 <- pcoa.d12[order(pcoa.d12$Condition, pcoa.d12$Participant.ID, pcoa.d12$visit.num, decreasing = F),] ; dim(pcoa.d12) # 174 x 49
 
+
+tiff("figures/PCoA.d12_subject.path.tiff", res = 200, width = 800, height = 2400, units = "px"); ggplot(pcoa.d12, aes(PC1, PC2)) + 
+  geom_path(aes(color=Post_prob), arrow = NULL, lineend = "round" , size=1.2)+
+  xlab(paste0("PC1 (", x.var, "%)")) + ylab(paste0("PC2 (", y.var, "%)")) + 
+  facet_grid(Participant.ID~Condition) + 
+  geom_hline(yintercept = 0, linetype="dotted", color="gray40", size=1, alpha=0.5)+
+  geom_vline(xintercept = 0, linetype="dotted", color="gray40", size=1, alpha=0.5)+
+  scale_color_gradient2(low = "green", mid = "black", midpoint = 0.5, high = "red") + 
+  theme_few() + 
+  theme(axis.text = element_text(size=rel(0.7)), 
+        axis.title.x = element_text(vjust=-1.5, size=rel(1.2)), 
+        axis.title.y = element_text(vjust=1.7, size=rel(1.2)),
+        strip.text.x = element_text(size=rel(2.3)),
+        strip.text.y = element_text(size=rel(1.1)),
+        legend.text = element_text(size=rel(0.8)), 
+        legend.title = element_blank(), 
+        legend.position = "right",
+        legend.justification = c(1, 0),
+        legend.background = element_rect(color = "black", size=0.5),
+        legend.key = element_rect(fill = "white"),
+        legend.key.width = unit(0.8, "line"),
+        legend.key.height = unit(0.8,"line"), 
+        legend.spacing.y = unit(0, "mm"), # Spacing between legend title and items
+        legend.spacing.x = unit(0.6, "mm")) ; dev.off()
+
+# 2) dynamic 70th percentile
+pcoa.p70 <- pcoa.meta.log[pcoa.meta.log$Participant.ID %in% dy_p70,] 
+pcoa.p70 <- pcoa.p70[order(pcoa.p70$Condition, pcoa.p70$Participant.ID, pcoa.p70$visit.num, decreasing = F),] ; dim(pcoa.p70) # 468 x 49
+
+tiff("figures/PCoA.p70_subject.path.tiff", res = 200, width = 1400, height = 2400, units = "px"); ggplot(pcoa.p70, aes(PC1, PC2)) + 
+  geom_path(aes(color=Post_prob), arrow = NULL, lineend = "round" , size=1.2)+
+  xlab(paste0("PC1 (", x.var, "%)")) + ylab(paste0("PC2 (", y.var, "%)")) + 
+  facet_wrap(~Participant.ID, ncol = 4) + 
+  geom_hline(yintercept = 0, linetype="dotted", color="gray40", size=1, alpha=0.5)+
+  geom_vline(xintercept = 0, linetype="dotted", color="gray40", size=1, alpha=0.5)+
+  scale_color_gradient2(low = "green", mid = "black", midpoint = 0.5, high = "red") + 
+  theme_few() + 
+  theme(axis.text = element_text(size=rel(0.7)), 
+        axis.title.x = element_text(vjust=-1.5, size=rel(1.2)), 
+        axis.title.y = element_text(vjust=1.7, size=rel(1.2)),
+        strip.text = element_text(size=rel(1.5)),
+        legend.text = element_text(size=rel(0.8)), 
+        legend.title = element_blank(), 
+        legend.position = "right",
+        legend.justification = c(1, 0),
+        legend.background = element_rect(color = "black", size=0.5),
+        legend.key = element_rect(fill = "white"),
+        legend.key.width = unit(0.8, "line"),
+        legend.key.height = unit(0.8,"line"), 
+        legend.spacing.y = unit(0, "mm"), # Spacing between legend title and items
+        legend.spacing.x = unit(0.6, "mm")) ; dev.off()
 
 #### 11. Clustering microbes based on their longitudinal abundance dynamics ####
 
