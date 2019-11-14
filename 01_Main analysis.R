@@ -756,7 +756,14 @@ mark.meta$specRatio <- (mark.meta$specIBD+1)/(mark.meta$specNON+1) ; mark.meta$s
   #mark.meta.act <- mark.meta[!is.na(mark.meta$Activity),] ; mark.meta.act$Activity <- droplevels(mark.meta.act$Activity) 
   #write.csv(mark.meta, "mark.meta.csv") 
   #mark.meta <- read.csv("input/mark.meta.csv", header = T, row.names = 1) ; rownames(mark.meta) <- NULL ; head(mark.meta) # Import csv files containing IBD/non-IBD markers + metadata 
-  
+
+head(mark.meta)
+mean(mark.meta[mark.meta$Condition=="nonIBD" & mark.meta$Fn.experience=="Non",]$specIBD) # 6.54
+mean(mark.meta[mark.meta$Condition=="nonIBD" & mark.meta$Fn.experience=="Exp",]$specIBD) # 9.23
+mean(mark.meta[mark.meta$Condition=="nonIBD" & mark.meta$Fn.experience=="Non",]$specNON) # 9.73
+mean(mark.meta[mark.meta$Condition=="nonIBD" & mark.meta$Fn.experience=="Exp",]$specNON) # 10.7
+mean(mark.meta[mark.meta$Condition=="nonIBD" & mark.meta$Fn.experience=="Non",]$specRatio) # 0.88
+mean(mark.meta[mark.meta$Condition=="nonIBD" & mark.meta$Fn.experience=="Exp",]$specRatio) # 0.92
 
 # F. nucleatum proximity ~ Abundance/Number of species
 mark.tmp <- mark.meta[, c(mark.list, "External.ID", "Week", "Condition", "Fn.directionality", "Fn.directionality.strict", "Shannon", "Human.Read.Fraction")]
