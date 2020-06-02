@@ -1,5 +1,5 @@
 # F.nucleatum-project
-Longitudinal analysis on fecal metagenomes of IBD and non-IBD subjects in a F. nucleuatm-oriented manner
+Longitudinal analysis on fecal metagenomes of IBD and non-IBD subjects in a F. nucleuatm-oriented perspective
 
 
 # Explanation
@@ -9,10 +9,10 @@ Longitudinal analysis on fecal metagenomes of IBD and non-IBD subjects in a F. n
 
 
 # Purpose
-- Aim of this project is to figure out the microbial dynamics with special interest on appearance of potential oncobacteirum F. nucleatum.
-- Assessing chronological changes in microbiome over time, we try to identify novel biomarkers for CRC even at the healthy or mild stage of gut.
+- Primary goal of this project is to understand microbial dynamics with special interest on the appearance of potential oncobacteirum F. nucleatum.
+- Analyzing chronological changes of microbiome over time, we tried to identify novel biomarkers for early gut dysbiosis.
 
 
 # Methodology
-- Assuming transient colonizaiton of F. nucleatum (detected only 41 out of 1526 samples) as dysbiotic initiation point, we screened particular microbes that changed before or after the F. nucleatum occurences.
-- Using "classifier" microbes that successfully differentiate F. nucleatum prior versus posterior samples, logistic regression models were generated, and tested into F. nucleatum-inexperienced subjects.
+- Assuming transient colonizaiton of F. nucleatum (detected only 41 out of 1526 samples) as a clue of dysbiosis, we screened relatively abundance "classifier" microbes that specifically alters at the point of F. nucleatum occurences.
+- Using potent "classifiers", multiple logistic regression models were generated, and applied to F. nucleatum-inexperienced subjects and independent healthy dataset from HMP1.
